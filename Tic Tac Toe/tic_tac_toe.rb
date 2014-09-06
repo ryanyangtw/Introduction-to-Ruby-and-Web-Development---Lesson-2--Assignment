@@ -39,32 +39,20 @@ class Board
 
 end
 
-class Position
-  attr_accessor :values
-  
-  def initialize
-    @values = []
-  end
-
-  def add_value(val)
-    self.values << val
-  end
-
-end
-
 module Record
-    attr_accessor :record
+    attr_accessor :record_values
 
     def initialize
-      @record = Position.new
+      #@record = Position.new
+      @record_values = []
     end
 
     def record_position(p)
-      self.record.add_value(p)
+      self.record_values << p
     end
 
     def eliminate_record
-      self.record = Position.new
+      self.record_values.clear
     end
 end
 
@@ -119,10 +107,10 @@ class Tictactoe
   def check_winner
     winning_lines = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
     winning_lines.each do |line|
-      if (line - player.record.values).empty?
+      if (line - player.record_values).empty?
         puts "You won!"
         play_again?
-      elsif (line - computer.record.values).empty?
+      elsif (line - computer.record_values).empty?
         puts "Computer won!"
         play_again?
       end      
